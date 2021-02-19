@@ -1,0 +1,16 @@
+.box-form{
+    background: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 0px auto;
+    float: none; 
+}
+
+body{
+    background: #eee;
+    padding: 0px;
+}
+
+.box-form input{
+    margin-bottom: 10px;
+}

@@ -16,6 +16,12 @@
     {% endblock %}
 
     {% block javascripts %}
+     
+     <script type="text-javascript">
+     var URL = "{{app.request.getSchemeAndHttpHost()}}/";
+    
+     </script>
+      
     <script src="{{asset('assets/js/jquery.min.js')}}"></script>
     <script src="{{asset('assets/bootstrap/js/bootstrap.min.js')}}"></script>
     {% endblock %}
@@ -23,8 +29,10 @@
     </head>
 
     <body>
+        
         <header>
-   
+           
+            
 
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
@@ -43,6 +51,7 @@
                 </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
+                    {% if app.user == null %}
                     <li> 
                         <a href="{{path("login")}}">
                         
@@ -52,26 +61,54 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{path("login")}}">
+                        <a href="{{path("register")}}">
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                        &nbsp; registro
                         </a>
-                    </li> 
+                    </li>
+                    {% endif %}
                 </ul>
+                
+                {% if app.user %}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" >
+                                {{app.user.name}} {{app.user.surname}}
+                                <span class="caret"></span>
+                            </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href=""> <span aria-hidden="true" class=" glyphicon glyphicon-user"></span> &nbsp; Mi perfil</a></li>
+                                    <li><a href=""> <span aria-hidden="true" class="glyphicon glyphicon-list-alt"></span>&nbsp; Mis datos</a></li>
+                                    <li class="divider" role="separator" ></li>
+                                    <li><a href="{{path('logout')}}"><span aria-hidden="true" class="glyphicon glyphicon-share"></span>&nbsp;Salir</a></li>
+                                    <li><a href=""><span class="glyphicon glyphicon-bell" aria-hidden="true"></span>&nbsp;Help</a></li>
+                                </ul>
+                        </li>    
+                        
+                        
+                     </ul>
+                {% endif %}
 
             </div>
         </nav>
         </header>
 
         <section id="content">
-
+          <div class="container">
+              <div class="col-lg-11">
+                 {% for message in app.session.flashbag().get('status')%}
+                     <div class="alert alert-success">{{message}}</div>
+                 {% endfor %}
+              </div>
+          </div>
+              <div class="clearfix"></div>
         {% block content %}       {# content defaultd #}        {% endblock %}
         </section>
 
         <footer class="col-lg-12">
             <hr>
             <div class="container">
-                <p class="text-muted">desarrollar una red social con symfony - victor Robles</p>
+                <p class="text-muted">desarrollar una red social con symfony - Oscar Canales</p>
             </div>
         </footer>
 

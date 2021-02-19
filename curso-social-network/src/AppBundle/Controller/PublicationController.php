@@ -9,8 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 class PublicationController extends Controller
 {
     public function indexAction(Request $request){
-        echo "accion index";
-        die(); 
+       
+       return $this->render('AppBundle:Publication:home.html.twig');
     }
 }
 
