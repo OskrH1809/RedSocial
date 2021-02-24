@@ -16,3 +16,20 @@ login_check:
 
 logout:
     path: /logout 
+    
+user_edit:
+    path: /my-data
+    defaults: { _controller: AppBundle:User:editUser}
+    
+user_list:
+    path: /people
+    defaults: { _controller: AppBundle:User:users}
+    
+    
+user_search:
+    path: /search
+    defaults: { _controller: AppBundle:User:search}
+
+user_profile:
+    path: /user/{nickname}
+    defaults: { _controller: AppBundle:User:profile, nickname:null}    

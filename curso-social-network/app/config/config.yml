@@ -68,3 +68,17 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+#knppaginatorbundle
+knp_paginator:
+    page_range: 5
+    default_options:
+        page_name: page
+        sort_field_name: sort
+        sort_direction_name: direction
+        distinct: true
+    template:
+        pagination: AppBundle:layouts:custom_paginator.html.twig
+        sortable: kpnPaginatorBundle:pagination:sortable_link.html.twig
+        
+        

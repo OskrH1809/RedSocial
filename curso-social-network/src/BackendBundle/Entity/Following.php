@@ -13,12 +13,12 @@ class Following
     private $id;
 
     /**
-     * @var \BackendBundle\Entity\Users
+     * @var \BackendBundle\Entity\User
      */
     private $followed;
 
     /**
-     * @var \BackendBundle\Entity\Users
+     * @var \BackendBundle\Entity\User
      */
     private $user;
 
@@ -36,11 +36,11 @@ class Following
     /**
      * Set followed
      *
-     * @param \BackendBundle\Entity\Users $followed
+     * @param \BackendBundle\Entity\User $followed
      *
      * @return Following
      */
-    public function setFollowed(\BackendBundle\Entity\Users $followed = null)
+    public function setFollowed(\BackendBundle\Entity\User $followed = null)
     {
         $this->followed = $followed;
 
@@ -50,7 +50,7 @@ class Following
     /**
      * Get followed
      *
-     * @return \BackendBundle\Entity\Users
+     * @return \BackendBundle\Entity\User
      */
     public function getFollowed()
     {
@@ -60,11 +60,11 @@ class Following
     /**
      * Set user
      *
-     * @param \BackendBundle\Entity\Users $user
+     * @param \BackendBundle\Entity\User $user
      *
      * @return Following
      */
-    public function setUser(\BackendBundle\Entity\Users $user = null)
+    public function setUser(\BackendBundle\Entity\User $user = null)
     {
         $this->user = $user;
 
@@ -74,11 +74,10 @@ class Following
     /**
      * Get user
      *
-     * @return \BackendBundle\Entity\Users
+     * @return \BackendBundle\Entity\User
      */
     public function getUser()
     {
         return $this->user;
     }
 }
-

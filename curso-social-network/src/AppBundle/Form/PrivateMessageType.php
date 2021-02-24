@@ -6,61 +6,63 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType; 
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
-class RegisterType extends AbstractType
+class PrivateMessageType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $user=$options['empty_data'];
         $builder
-                ->add('name',TextType::class,array(
-                    'label'=>'Nombre',
+                ->add('receiver',EntityType::class,array(
+                    'class'=>'BackendBundle:User',
+                    'query_builder'=>  function ($er) use($user){
+                    return $er->getFollowingUsers($user);
+                    },
+                    'choice_label'=>  function($user){
+                    return $user->getName()." ".$user->getSurname()."-".$user->getNick();
+                    },
+                    'label'=>'Para: ',
+                    'attr'=> array('class'=>'form-control')
+                         
+                ))
+                ->add('message', TextareaType::class,array(
+                    'label'=>'Mensaje ',
                     'required'=>'required',
+                     'data' => '',
                     'attr'=>array(
-                        'class'=>'form-name form-control',
-                        'value'=>''
+                        'class'=>'form-control',
+                        
+                        
                     )
                 ))
-                ->add('surname',TextType::class,array(
-                    'label'=>'Apellido',
-                    'required'=>'required',
+                ->add('image', FileType::class,array(
+                    'label'=>'Imagen ',
+                    'required'=>false,
+                    'data_class'=> null,
                     'attr'=>array(
-                        'class'=>'form-surname form-control',
-                        'value'=>''
+                        'class'=>'form-control',
+                        
                     )
                 ))
-                ->add('nick',TextType::class,array(
-                    'label'=>'Nick',
-                    'required'=>'required',
+                 ->add('file', FileType::class,array(
+                    'label'=>'Archivo ',
+                    'required'=>false,
+                    'data_class'=> null,
                     'attr'=>array(
-                        'class'=>'form-nick nick-input form-control',
-                        'value'=>''
+                        'class'=>'form-control',
+                        
                     )
                 ))
-                ->add('email',EmailType::class,array(
-                    'label'=>'Correo',
-                    'required'=>'required',
-                    'attr'=>array(
-                        'class'=>'form-email form-control',
-                        'value'=>''
-                    )
-                ))
-                ->add('password',PasswordType::class,array(
-                    'label'=>'Contraseña',
-                    'required'=>'required',
-                    'attr'=>array(
-                        'class'=>'form-password form-control',
-                        'value'=>''
-                    )
-                ))
-                ->add('Registrarse',  SubmitType::class, array(
+                ->add('Enviar',  SubmitType::class, array(
                     "attr"=>array(
-                        "class"=>"form-submit btn btn-success"
+                        "class"=>" btn btn-success"
                     )
                 ))
 
@@ -73,7 +75,9 @@ class RegisterType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'BackendBundle\Entity\User'
+            'data_class' => 'BackendBundle\Entity\PrivateMessage',
+            
+            
         ));
     }
 
